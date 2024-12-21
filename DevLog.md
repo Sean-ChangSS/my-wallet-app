@@ -208,3 +208,7 @@ note: 40 min taken
     1. Add jwt utils and tests
   2. Create user context
   3. Create middleware
+3. Create signup endpoint
+  1. Configure routes.rb
+  2. Implement signup endpoint
+  3. Write tests (Support by GPT)

@@ -21,4 +21,12 @@ class ApplicationController < ActionController::API
       render json: { error: 'Missing token' }, status: :unauthorized
     end
   end
+
+  def render_success(payload)
+    render json: payload
+  end
+
+  def render_bad_request(payload)
+    render json: payload, status: :bad_request
+  end
 end
