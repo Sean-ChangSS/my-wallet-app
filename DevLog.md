@@ -12,7 +12,7 @@ the following stage:
 2. Refine user story, explore and decide functional and non-functional requirements,
 acceptance criteria, follow ups.
 3. Explore, select and explain the technology I'll be used.
-4. Setup scripts to boot services with one tap.
+4. Setup project and boot scripts.
 5. Explore and define development flow I'll used in the following work.
 6. Develop common concerns
 7. Develop features.
@@ -102,3 +102,12 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 2. Web application framework: Ruby on Rails (familiar to me)
 3. Database: PostgreSQL (required by assessment)
 4. Local development helper: Docker
+
+
+2024/12/21 12:51 ~
+# 4 Setup Project And Boot Scripts
+
+* Supported by GPT
+1. Initialize Ruby on Rails: `docker run --rm -v "$(pwd)":/app -w /app ruby:3.2 bash -c "gem install rails && rails new . --database=postgresql --api"`
+2. Security and flexibility is ignored for simplicity.
+3. The app can be boot up simply by running `docker-compose up --build`
