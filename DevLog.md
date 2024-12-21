@@ -101,13 +101,24 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 1. Language: Ruby (familiar to me)
 2. Web application framework: Ruby on Rails (familiar to me)
 3. Database: PostgreSQL (required by assessment)
-4. Local development helper: Docker
+4. Local development environment: Docker
 
 
 2024/12/21 12:51 ~
 # 4 Setup Project And Boot Scripts
 
+## Setup Rails Application
 * Supported by GPT
 1. Initialize Ruby on Rails: `docker run --rm -v "$(pwd)":/app -w /app ruby:3.2 bash -c "gem install rails && rails new . --database=postgresql --api"`
 2. Security and flexibility is ignored for simplicity.
-3. The app can be boot up simply by running `docker-compose up --build`
+3. Setup Dockerfile, docker-compose
+4. The app can now boot up by running `docker-compose up --build`
+
+## Setup Rspec
+1. Modify Gemfile, add rspec and related package.
+2. Install by docker-compose build
+3. Initialize rspec with docker-compose run web bin/rails generate rspec:install
+4. setup database.yml
+5. Setup test db `docker-compose run web bin/rails db:setup RAILS_ENV=test`
+6. Verify test database `docker-compose exec db psql -U postgres -d myapp_test -c '\dt'`
+7. Add test file and launch rspec with `docker-compose run web bin/rspec spec/example/example_spec.rb`

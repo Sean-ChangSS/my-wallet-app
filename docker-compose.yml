@@ -26,6 +26,7 @@ services:
       DATABASE_USER: postgres
       DATABASE_PASSWORD: password
       DATABASE_NAME: myapp_development
+      DATABASE_NAME_TEST: myapp_test
 
 volumes:
   db_data:
