@@ -200,3 +200,4 @@ note: 40 min taken
 ### Development
 1. Create user table
   1. Add gem annotaterb.
+  2. Generate user model

@@ -1,5 +1,5 @@
 up:
-	docker-compose up --force-recreate
+	docker-compose up web --force-recreate
 
 down:
 	docker-compose down
