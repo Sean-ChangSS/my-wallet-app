@@ -104,7 +104,7 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 4. Local development environment: Docker
 
 
-2024/12/21 12:51 ~
+2024/12/21 12:51 ~ 2024/12/21 14:00
 # 4 Setup Project And Boot Scripts
 
 ## Setup Rails Application
@@ -122,3 +122,6 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 5. Setup test db `docker-compose run web bin/rails db:setup RAILS_ENV=test`
 6. Verify test database `docker-compose exec db psql -U postgres -d myapp_test -c '\dt'`
 7. Add test file and launch rspec with `docker-compose run web bin/rspec spec/example/example_spec.rb`
+
+## Setup Makefile
+1. Setup makefile
