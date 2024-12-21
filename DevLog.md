@@ -159,7 +159,7 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
     - index:
       - username
 2. Create authentication concern
-  1. Create authentication module
+  1. Create jwt utils
     - Interfaces
       1. encode: encode payload to token
       2. decode: decode token
@@ -201,3 +201,6 @@ note: 40 min taken
 1. Create user table
   1. Add gem annotaterb.
   2. Generate user model
+2. Create authentication concern
+  1. Create jwt utils (Support by GPT)
+    1. Add jwt utils and tests
