@@ -93,3 +93,12 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 ### User can view his/her transaction history
 1. User with no transaction history should get empty result.
 2. User with 51 transaction histories should get 50 first, and 1 for the next page.
+
+
+2024/12/21 12:45 ~ 2024/12/21 12:50
+# 3 Selected Technology
+
+1. Language: Ruby (familiar to me)
+2. Web application framework: Ruby on Rails (familiar to me)
+3. Database: PostgreSQL (required by assessment)
+4. Local development helper: Docker
