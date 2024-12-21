@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   namespace :api_v1, path: 'v1' do
     namespace :user do
       post :sign_up, action: :sign_up
+      post :login, action: :login
     end
   end
 end

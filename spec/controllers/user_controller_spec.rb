@@ -58,4 +58,34 @@ RSpec.describe "ApiV1::UserController", type: :request do
       end
     end
   end
+
+  describe "POST /v1/user/login" do
+    let!(:user) { create(:user) }
+    let(:headers) { { "Content-Type" => "application/json" } }
+
+    context "when username exists" do
+      it "returns user jwt token" do
+        post "/v1/user/login", params: { username: user.username }.to_json, headers: headers
+
+        expect(response).to have_http_status(:ok)
+        
+        json_response = JSON.parse(response.body)
+        expect(json_response).to have_key("token")
+        expect(json_response["token"]).to be_a(String)
+      end
+    end
+
+    context "when username does not exist" do
+      let(:invalid_username) { 'invalid_username' }
+
+      it "returns user jwt token" do
+        post "/v1/user/login", params: { username: invalid_username }.to_json, headers: headers
+
+        expect(response).to have_http_status(:bad_request)
+        
+        json_response = JSON.parse(response.body)
+        expect(json_response).to eq({ "error" => "incorrect username" })
+      end
+    end
+  end
 end
