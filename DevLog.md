@@ -75,6 +75,7 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 4. A sends B 0, reject for trivial operation.
 5. A sends B 1,000,000,000, reject for invalid amount.
 5. A sends B -1, reject for invalid amount.
+6. A sends B 1, but B does not exist.
 
 ### User can check his/her wallet balance
 1. A has 0, request balance should return 0.
@@ -136,7 +137,8 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 5. Write dev logs, note, comments if needed.
 
 
-2024/12/21 14:53 ~ 2024/12/21
+2024/12/21 14:53 ~ 2024/12/21 16:45
+2024/12/21 17:31 ~ 
 # 6 Develop common concerns
 
 ## Security
@@ -204,3 +206,5 @@ note: 40 min taken
 2. Create authentication concern
   1. Create jwt utils (Support by GPT)
     1. Add jwt utils and tests
+  2. Create user context
+  3. Create middleware
