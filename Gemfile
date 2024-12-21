@@ -51,4 +51,6 @@ group :development, :test do
   gem 'faker', '~> 2.0'
 end
 
-
+group :development do
+  gem 'annotaterb'
+end

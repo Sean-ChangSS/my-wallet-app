@@ -198,4 +198,5 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 note: 40 min taken
 
 ### Development
-1. 
+1. Create user table
+  1. Add gem annotaterb.
