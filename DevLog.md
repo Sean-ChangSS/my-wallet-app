@@ -124,4 +124,13 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 7. Add test file and launch rspec with `docker-compose run web bin/rspec spec/example/example_spec.rb`
 
 ## Setup Makefile
-1. Setup makefile
+1. Setup Makefile
+
+
+2024/12/21 14:01 ~ 2024/12/21 14:05
+# 5 Define Development Flow
+1. List changes, and refine requirements if needed.
+2. Write test for current feature.
+3. Develop the simplest working solution.
+4. Refactor if needed.
+5. Write dev logs, note, comments if needed.
