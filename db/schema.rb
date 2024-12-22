@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_22_030722) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_22_091328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "transaction_events", force: :cascade do |t|
+    t.integer "wallet_id", null: false
+    t.integer "source_wallet_id"
+    t.integer "amount", null: false
+    t.integer "balance", null: false
+    t.integer "transaction_type", null: false
+    t.datetime "created_at", null: false
+    t.index ["wallet_id", "created_at"], name: "index_transaction_events_on_wallet_id_and_created_at"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username"

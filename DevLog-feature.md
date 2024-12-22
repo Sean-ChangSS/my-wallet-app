@@ -57,3 +57,23 @@ note: 60 min spent
 note: 10 min spent
 
 ## Get specify user transaction history
+
+### Changes
+1. Add Transaction Model
+2. Add get history transaction endpoint
+3. Record transaction for all wallet service
+
+### Implementation
+1. Add Transaction Model
+  1. Design TransactionEvent Model
+    - Table name: transactions
+    - Table Fields:
+      - id
+      - created_at
+      - wallet_id: integer, non-null
+      - source_wallet_id: integer
+      - amount: integer, non-null
+      - balance: integer, non-null
+      - transaction_type: integer, non-null
+    - Index:
+      wallet_id, created_at
