@@ -1,4 +1,5 @@
 2024/12/22 10:48 ~ 2024/12/22 12:55
+2024/12/22 14:19
 # 7 Develop feature
 
 ## Deposit to specify user wallet
@@ -28,6 +29,13 @@
 note: 120 min spent
 
 ## Withdraw from specify user wallet
+
+### Changes
+1. Write test and implement business logic
+
+### Implementation
+1. Write test and implement business logic
+note: 20min spent
 
 ## Transfer from one user to another user
 
