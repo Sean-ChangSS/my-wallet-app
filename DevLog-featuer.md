@@ -19,6 +19,7 @@
     - created_at
     - user_id, integer, null: false
     - balance, integer, null: false
+2. Add wallet controller
 
 ## Withdraw from specify user wallet
 

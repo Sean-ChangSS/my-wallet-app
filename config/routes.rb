@@ -13,5 +13,8 @@ Rails.application.routes.draw do
       post :sign_up, action: :sign_up
       post :login, action: :login
     end
+
+    namespace :wallet do
+    end
   end
 end
