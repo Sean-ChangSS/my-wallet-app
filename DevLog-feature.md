@@ -6,9 +6,8 @@
 ### Changes
 1. Add wallet model
 2. Add wallet controller
-3. Add test
-4. Register user should create wallet too
-5. Implement logic to satisfy test
+3. Register user should create wallet too
+4. Write test and implement business logic
 
 ### Implementation
 1. Add wallet model
@@ -20,6 +19,7 @@
     - user_id, integer, null: false
     - balance, integer, null: false
 2. Add wallet controller
+3. Create user will create wallet
 
 ## Withdraw from specify user wallet
 

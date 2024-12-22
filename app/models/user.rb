@@ -13,4 +13,10 @@
 #
 class User < ApplicationRecord
   has_one :wallet
+
+  after_create :create_wallet!
+
+  def create_wallet!
+    Wallet.create!(user: self)
+  end
 end
