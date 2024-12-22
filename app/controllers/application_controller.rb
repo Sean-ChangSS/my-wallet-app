@@ -3,6 +3,8 @@ class ApplicationController < ActionController::API
 
   attr_reader :current_user
 
+  rescue_from StandardError, with: :json_error_response
+
   private
 
   def authenticate_request
@@ -22,11 +24,24 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def json_error_response(err)
+    payload = {
+      message: err.message,
+      backtrace: err.backtrace
+    } unless Rails.env.production?
+
+    render_internal_server_error(payload)
+  end
+
   def render_success(payload)
     render json: payload
   end
 
   def render_bad_request(payload)
     render json: payload, status: :bad_request
+  end
+
+  def render_internal_server_error(payload)
+    render json: payload, status: :internal_server_error
   end
 end

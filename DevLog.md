@@ -138,7 +138,8 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 
 
 2024/12/21 14:53 ~ 2024/12/21 16:45
-2024/12/21 17:31 ~ 
+2024/12/21 17:31 ~ 2024/12/21 19:20
+2024/12/22 10:27 ~ 2024/12/22 10:46
 # 6 Develop common concerns
 
 ## Security
@@ -213,3 +214,24 @@ note: 40 min taken
   2. Implement signup endpoint
   3. Write tests (Support by GPT)
 4. Create login endpoint
+note: 181 min taken
+
+## Logging
+
+Logging request before processing is important for monitoring and
+debugging, fields like user info and request payload which is not available
+from gateway access log are important info to be stored.
+But for this project we'll only run in development environment, logging doesn't
+affect business functionality nor debugging experience so I'll skip this concern
+here.
+
+## Error Handling
+
+### Changes
+1. Rescue all StandardError and return error message and traceback in simpler
+format to make debug easier both in test stage and serving stage.
+
+### Development
+1. Create middleware handles StandardError exception and return message and
+traceback only.
+2. Add test

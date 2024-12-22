@@ -77,4 +77,29 @@ RSpec.describe ApplicationController, type: :controller do
       end
     end
   end
+
+  describe '.json_error_response' do 
+    controller do
+      def index
+        raise StandardError
+      end
+    end
+
+    context 'controller raises exception' do
+      before do
+        get :index
+      end
+
+      it 'should return error message and error backtrace' do
+        body = JSON.parse(response.body)
+        expect(body['message']).to be_a(String)
+        expect(body['backtrace']).to be_a(Array)
+        expect(body['backtrace'][0]).to be_a(String)
+      end
+
+      it 'returns status 500' do
+        expect(response).to have_http_status(:internal_server_error)
+      end
+    end
+  end
 end
