@@ -15,7 +15,7 @@ class Wallet::TransferService < BaseService
       return false
     end
 
-    Wallet.transaction do
+    ActiveRecord::Base.transaction do
       src_wallet = Wallet.lock.find_by(user_id: user.id)
       dest_wallet = Wallet.lock.find_by(user_id: dest_user.id)
 
@@ -31,6 +31,19 @@ class Wallet::TransferService < BaseService
 
       src_wallet.decrement!(:balance, amount)
       dest_wallet.increment!(:balance, amount)
+
+      TransactionEvent.create!(
+        wallet: src_wallet,
+        amount: amount,
+        balance: src_wallet.balance,
+        transaction_type: TransactionEvent.transaction_types['transfer_out']
+      )
+      TransactionEvent.create!(
+        wallet: dest_wallet,
+        amount: amount,
+        balance: dest_wallet.balance,
+        transaction_type: TransactionEvent.transaction_types['transfer_in']
+      )
     end
   rescue ActiveRecord::RecordInvalid => e
     errors.add(:amount, e.message)

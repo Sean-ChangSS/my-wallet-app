@@ -7,7 +7,7 @@ class Wallet::DepositService < BaseService
   validates :amount, type: { type: Integer }, presence: true, comparison: { greater_than: 0, less_than: 1_000_000_000 }
 
   def perform
-    Wallet.transaction do
+    ActiveRecord::Base.transaction do
       wallet = Wallet.lock.find_by(user_id: user.id)
 
       if wallet.balance + amount > MAX_BALANCE
@@ -16,6 +16,13 @@ class Wallet::DepositService < BaseService
       end
 
       wallet.increment!(:balance, amount)
+      
+      TransactionEvent.create!(
+        wallet: wallet,
+        amount: amount,
+        balance: wallet.balance,
+        transaction_type: TransactionEvent.transaction_types['deposit']
+      )
     end
   rescue ActiveRecord::RecordInvalid => e
     errors.add(:amount, e.message)

@@ -1,6 +1,6 @@
 2024/12/22 10:48 ~ 2024/12/22 12:55
 2024/12/22 14:19 ~ 2024/12/22 16:00
-2024/12/22 16:20 ~
+2024/12/22 16:20 ~ 2024/12/22 18:40
 # 7 Develop feature
 
 ## Deposit to specify user wallet
@@ -80,3 +80,5 @@ note: 10 min spent
 2. Add get history transaction endpoint
   1. Add pagination gem
   2. Write test and get transaction logic
+3. Record transaction for all wallet service
+note: 140 min spent

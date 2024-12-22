@@ -16,14 +16,18 @@ RSpec.describe 'ApiV1::WalletController', type: :request do
 
     context 'when depositing valid amounts' do
       it 'deposit 1 to empty wallet should be accepted' do
-        perform_deposit(1)
+        expect { perform_deposit(1) }.to change { wallet.reload.balance }.from(0).to(1)
+          .and change { wallet.transaction_events.count }.from(0).to(1)
 
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
         expect(json['balance']).to eq(1)
 
-        wallet.reload
-        expect(wallet.balance).to eq(1)
+        transaction_event = wallet.transaction_events.first
+        expect(transaction_event.wallet_id).to eq(wallet.id)
+        expect(transaction_event.amount).to eq(1)
+        expect(transaction_event.balance).to eq(1)
+        expect(transaction_event.transaction_type).to eq('deposit')
       end
 
       it 'deposit 1 to empty wallet with 100 parallel requests should add 100 to wallet' do
@@ -145,7 +149,8 @@ RSpec.describe 'ApiV1::WalletController', type: :request do
 
     context 'when withdrawing valid amounts' do
       it 'withdraw 1 from empty wallet should be accepted' do
-        perform_withdraw(1)
+        expect { perform_withdraw(1) }.to change { wallet.reload.balance }.from(100).to(99)
+          .and change { wallet.transaction_events.count }.from(0).to(1)
 
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
@@ -153,6 +158,12 @@ RSpec.describe 'ApiV1::WalletController', type: :request do
 
         wallet.reload
         expect(wallet.balance).to eq(99)
+
+        transaction_event = wallet.transaction_events.first
+        expect(transaction_event.wallet_id).to eq(wallet.id)
+        expect(transaction_event.amount).to eq(1)
+        expect(transaction_event.balance).to eq(99)
+        expect(transaction_event.transaction_type).to eq('withdraw')
       end
 
       it 'withdraw 1 from empty wallet with 100 parallel requests should reduce balance by 100' do
@@ -281,10 +292,24 @@ RSpec.describe 'ApiV1::WalletController', type: :request do
 
         it 'accepts transfer with HTTP 200' do
           expect { perform_transfer }.to change { user_a.wallet.reload.balance }.from(1).to(0)
-                            .and change { user_b.wallet.reload.balance }.from(0).to(1)
+            .and change { user_b.wallet.reload.balance }.from(0).to(1)
+            .and change { user_a.wallet.transaction_events.reload.count }.from(0).to(1)
+            .and change { user_b.wallet.transaction_events.reload.count }.from(0).to(1)
 
           expect(response).to have_http_status(:ok)
           expect(JSON.parse(response.body)).to eq({ 'balance' => 0 })
+
+          transaction_event_a = user_a.wallet.transaction_events.first
+          expect(transaction_event_a.wallet_id).to eq(user_a.wallet.id)
+          expect(transaction_event_a.amount).to eq(1)
+          expect(transaction_event_a.balance).to eq(0)
+          expect(transaction_event_a.transaction_type).to eq('transfer_out')
+
+          transaction_event_b = user_b.wallet.transaction_events.first
+          expect(transaction_event_b.wallet_id).to eq(user_b.wallet.id)
+          expect(transaction_event_b.amount).to eq(1)
+          expect(transaction_event_b.balance).to eq(1)
+          expect(transaction_event_b.transaction_type).to eq('transfer_in')
         end
       end
 
