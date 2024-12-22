@@ -78,8 +78,8 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 3. A sends B 1, if A has 1 and B has 999,999,999, request rejected due to full wallet from B, both wallet should remain the same.
 4. A sends B 0, reject for trivial operation.
 5. A sends B 1,000,000,000, reject for invalid amount.
-5. A sends B -1, reject for invalid amount.
-6. A sends B 1, but B does not exist.
+6. A sends B -1, reject for invalid amount.
+7. A sends B 1, but B does not exist.
 
 ### User can check his/her wallet balance
 1. A has 0, request balance should return 0.

@@ -255,4 +255,119 @@ RSpec.describe 'ApiV1::WalletController', type: :request do
       end
     end
   end
+
+  describe 'POST /v1/wallet/transfer' do
+    let(:user_a) { create(:user, username: 'user_a') }
+    let(:user_b) { create(:user, username: 'user_b') }
+    let(:initial_balance_a) { 0 }
+    let(:initial_balance_b) { 0 }
+    let(:params) { {} }
+
+    before do
+      user_a.wallet.update!(balance: initial_balance_a)
+      user_b.wallet.update!(balance: initial_balance_b)
+    end
+
+    def perform_transfer
+      post '/v1/wallet/transfer', params: params.to_json, headers: auth_header(user_a.id)
+    end
+
+    context 'A sends B 1' do
+      let(:params) { { username: 'user_b', amount: 1 } }
+
+      context 'with sufficient source balance and sufficient target remain' do
+        let(:initial_balance_a) { 1 }
+        let(:initial_balance_b) { 0 }
+
+        it 'accepts transfer with HTTP 200' do
+          expect { perform_transfer }.to change { user_a.wallet.reload.balance }.from(1).to(0)
+                            .and change { user_b.wallet.reload.balance }.from(0).to(1)
+
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body)).to eq({ 'balance' => 0 })
+        end
+      end
+
+      context 'with insufficient source balance' do
+        let(:initial_balance_a) { 0 }
+        let(:initial_balance_b) { 0 }
+  
+        it 'rejects transfer with HTTP 400' do
+          perform_transfer
+
+          expect(response).to have_http_status(:bad_request)
+          expect(JSON.parse(response.body)['error']).to be_a(String)
+          expect(user_a.wallet.reload.balance).to eq(initial_balance_a)
+          expect(user_b.wallet.reload.balance).to eq(initial_balance_b)
+        end
+      end
+
+      context 'with insufficient target remain' do
+        let(:initial_balance_a) { 1 }
+        let(:initial_balance_b) { 999_999_999 }
+
+        it 'rejects transfer with HTTP 400' do
+          perform_transfer
+
+          expect(response).to have_http_status(:bad_request)
+          expect(JSON.parse(response.body)['error']).to be_a(String)
+          expect(user_a.wallet.reload.balance).to eq(initial_balance_a)
+          expect(user_b.wallet.reload.balance).to eq(initial_balance_b)
+        end
+      end
+    end
+
+    context 'A sends B 0' do
+      let(:params) { { username: 'user_b', amount: 0 } }
+
+      it 'rejects the request for trivial operation with HTTP 400' do
+        perform_transfer
+
+        expect(response).to have_http_status(:bad_request)
+        expect(JSON.parse(response.body)['error']).to be_a(String)
+        expect(user_a.wallet.reload.balance).to eq(initial_balance_a)
+        expect(user_b.wallet.reload.balance).to eq(initial_balance_b)
+      end
+    end
+
+    context 'A sends B 1,000,000,000' do
+      let(:params) { { username: 'user_b', amount: 1_000_000_000 } }
+
+      it 'rejects the request for invalid amount with HTTP 400' do
+        perform_transfer
+
+        expect(response).to have_http_status(:bad_request)
+        expect(JSON.parse(response.body)['error']).to be_a(String)
+        expect(user_a.wallet.reload.balance).to eq(initial_balance_a)
+        expect(user_b.wallet.reload.balance).to eq(initial_balance_b)
+      end
+    end
+
+    context 'A sends B -1' do
+      let(:params) { { username: 'user_b', amount: -1 } }
+
+      it 'rejects the request for invalid amount with HTTP 400' do
+        perform_transfer
+
+        expect(response).to have_http_status(:bad_request)
+        expect(JSON.parse(response.body)['error']).to be_a(String)
+        expect(user_a.wallet.reload.balance).to eq(initial_balance_a)
+        expect(user_b.wallet.reload.balance).to eq(initial_balance_b)
+      end
+    end
+
+    context 'A sends B 1, but B does not exist' do
+      let(:initial_balance_a) { 1 }
+      let(:initial_balance_b) { 0 }
+      let(:params) { { username: 'non_existent_user', amount: 1 } }
+
+      it 'rejects the request because target user does not exist with HTTP 400' do
+        perform_transfer
+
+        expect(response).to have_http_status(:bad_request)
+        expect(JSON.parse(response.body)['error']).to be_a(String)
+        expect(user_a.wallet.reload.balance).to eq(initial_balance_a)
+      end
+    end
+  end
 end

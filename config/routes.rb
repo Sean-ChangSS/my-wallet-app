@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     namespace :wallet do
       post :deposit, action: :deposit
       post :withdraw, action: :withdraw
+      post :transfer, action: :transfer
     end
   end
 end
