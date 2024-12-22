@@ -59,6 +59,8 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 4. User deposit 0 should be rejected due to trivial operation.
 5. User deposit 1,000,000,000 should be rejected due to invalid amount.
 6. User deposit -1 should be rejected due to invalid amount.
+7. User deposit 0.5 should be rejected due to incorrect amount type.
+8. User deposit "abc" should be rejected due to incorrect amount type.
 
 ### User can withdraw money from his/her wallet
 1. User withdraw 1 from empty wallet should be rejected.
