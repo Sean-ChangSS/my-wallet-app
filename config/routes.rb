@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       post :withdraw, action: :withdraw
       post :transfer, action: :transfer
       get :balance, action: :get_balance
+      get :transactions, action: :transactions
     end
   end
 end

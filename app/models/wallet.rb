@@ -14,5 +14,5 @@
 #
 class Wallet < ApplicationRecord
   belongs_to :user
-  has_many :transaction_event
+  has_many :transaction_events
 end

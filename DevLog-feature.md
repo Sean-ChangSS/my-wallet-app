@@ -77,3 +77,6 @@ note: 10 min spent
       - transaction_type: integer, non-null
     - Index:
       wallet_id, created_at
+2. Add get history transaction endpoint
+  1. Add pagination gem
+  2. Write test and get transaction logic

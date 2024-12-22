@@ -416,4 +416,41 @@ RSpec.describe 'ApiV1::WalletController', type: :request do
       end
     end
   end
+
+  describe 'GET /v1/wallet/transactions' do
+    let(:user) { create(:user) }
+    let!(:transactions) { create_list(:transaction_event, 50, wallet: user.wallet) }
+
+    def perform_get_transactions
+      get '/v1/wallet/transactions', params: { page: 2, per_page: 10 }, headers: auth_header(user.id)
+    end
+
+    context "with valid parameters" do
+      it "returns a 200 status code" do
+        perform_get_transactions
+
+        expect(response).to have_http_status(:ok)
+      end
+      
+      it "returns the correct page of transactions" do
+        perform_get_transactions
+
+        expect(JSON.parse(response.body)['transactions'][0]['id']).to eq(
+          TransactionEvent.all.order(created_at: :desc)[10].id
+        )
+      end
+
+      it "returns pagination metadata" do
+        perform_get_transactions
+
+        expect(JSON.parse(response.body)['meta']).to eq({
+          'current_page' => 2,
+          'next_page' => 3,
+          'prev_page' => 1,
+          'total_pages' => 5,
+          'total_count' => 50
+        })
+      end
+    end
+  end
 end
