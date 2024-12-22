@@ -86,4 +86,19 @@ class ApiV1::WalletController < ApiV1::BaseController
       return render_bad_request({ error: transfer_service.first_err_msg })
     end
   end
+
+  <<-APIDOC
+    =begin
+      @apiGroup Wallet
+      @api {get}/v1/wallet/balance wallet/balance
+      @apiSuccessExample {json} success
+        HTTP/1.1 200
+        {
+          "balance": 100
+        }
+    =end
+  APIDOC
+  def get_balance
+    return render_success({ balance: current_user.wallet.balance})
+  end
 end

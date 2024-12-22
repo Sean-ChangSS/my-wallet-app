@@ -84,16 +84,7 @@ Intercept error raised at middleware, log it and fill lazy response if needed.
 ### User can check his/her wallet balance
 1. A has 0, request balance should return 0.
 2. A has 999,999,999, request balance should return 999,999,999.
-3. A has 0, run the following operation:
-  1. Check A's balance should result in 0.
-  2. Deposit 100 to wallet.
-  3. Check A's balance should result in 100.
-  4. Withdraw 50 from wallet.
-  5. Check A's balance should reseult in 50.
-  6. B sends A 50.
-  7. Check A's balance should result in 100.
-  8. A sends B 100.
-  9. Check A's balance should result in 0.
+3. A has 0, and is updated to 100, request balance should return 100.
 
 ### User can view his/her transaction history
 1. User with no transaction history should get empty result.

@@ -370,4 +370,50 @@ RSpec.describe 'ApiV1::WalletController', type: :request do
       end
     end
   end
+
+  describe 'GET /v1/wallet/balance' do
+    let(:user) { create(:user) }
+    let(:initial_balance) { 0 }
+
+    before do
+      user.wallet.update!(balance: initial_balance)
+    end
+
+    def perform_get_balance
+      get '/v1/wallet/balance', headers: auth_header(user.id)
+    end
+
+    context 'get balance with 0 wallet balance' do
+      let(:initial_balance) { 0 }
+
+      it 'should return 0' do
+        perform_get_balance
+
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)['balance']).to eq(initial_balance)
+      end
+    end
+
+    context 'get balance with 999,999,999 wallet balance' do
+      let(:initial_balance) { 999_999_999 }
+
+      it 'should return 999,999,999' do
+        perform_get_balance
+
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)['balance']).to eq(999_999_999)
+      end
+    end
+
+    context 'get balance after update' do
+      it 'should return updated balance' do
+        user.wallet.update!(balance: 100)
+
+        perform_get_balance
+
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)['balance']).to eq(100)
+      end
+    end
+  end
 end

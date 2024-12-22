@@ -1,5 +1,6 @@
 2024/12/22 10:48 ~ 2024/12/22 12:55
-2024/12/22 14:19
+2024/12/22 14:19 ~ 2024/12/22 16:00
+2024/12/22 16:20 ~
 # 7 Develop feature
 
 ## Deposit to specify user wallet
@@ -47,5 +48,12 @@ note: 20min spent
 note: 60 min spent
 
 ## Get specify user balance
+
+### Changes
+1. Write test and implement business logic
+
+### Implementation
+1. Write test and implement business logic
+note: 10 min spent
 
 ## Get specify user transaction history
