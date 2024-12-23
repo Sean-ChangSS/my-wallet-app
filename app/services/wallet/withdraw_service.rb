@@ -13,7 +13,8 @@ class Wallet::WithdrawService < BaseService
         raise ActiveRecord::Rollback
       end
 
-      wallet.decrement!(:balance, amount)
+      wallet.balance -= amount
+      wallet.save!
 
       TransactionEvent.create!(
         wallet: wallet,

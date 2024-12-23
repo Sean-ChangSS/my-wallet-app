@@ -16,8 +16,9 @@ class Wallet::TransferService < BaseService
     end
 
     ActiveRecord::Base.transaction do
-      src_wallet = Wallet.lock.find_by(user_id: user.id)
-      dest_wallet = Wallet.lock.find_by(user_id: dest_user.id)
+      wallets = Wallet.where(user_id: [user.id, dest_user.id]).order(:id).lock
+      src_wallet = wallets.find { |w| w.user_id == user.id }
+      dest_wallet = wallets.find { |w| w.user_id == dest_user.id }
 
       if src_wallet.balance - amount < 0
         errors.add(:amount, "Insufficient balance to transfer.")
@@ -29,8 +30,11 @@ class Wallet::TransferService < BaseService
         raise ActiveRecord::Rollback
       end
 
-      src_wallet.decrement!(:balance, amount)
-      dest_wallet.increment!(:balance, amount)
+      src_wallet.balance -= amount
+      dest_wallet.balance += amount
+
+      src_wallet.save!
+      dest_wallet.save!
 
       TransactionEvent.create!(
         wallet: src_wallet,

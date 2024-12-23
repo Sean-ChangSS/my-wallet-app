@@ -15,7 +15,8 @@ class Wallet::DepositService < BaseService
         raise ActiveRecord::Rollback
       end
 
-      wallet.increment!(:balance, amount)
+      wallet.balance += amount
+      wallet.save!
       
       TransactionEvent.create!(
         wallet: wallet,

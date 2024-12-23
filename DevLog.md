@@ -83,8 +83,23 @@ See DevLog-refineRequirements.md
 4. Refactor if needed.
 5. Write dev logs, note, comments if needed.
 
+
 # 6 Develop common concerns
 See DevLog0commonConcern.md
 
+
 # 7 Develop feature
 See DevLog-feature.md
+
+
+# 8 Review and write summary for this work.
+
+## Todo
+1. Write readme.md
+  0. Fix dead lock issue
+  1. Launching environment
+  2. Feature navigation
+  3. Project navigation
+  4. Decision explanation
+  5. Working time summary
+  6. List todos
