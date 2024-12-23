@@ -16,7 +16,7 @@
 #
 class TransactionEvent < ApplicationRecord
   belongs_to :wallet
-  belongs_to :source_wallet, class_name: 'Wallet', optional: true
+  belongs_to :source_wallet, class_name: "Wallet", optional: true
 
   enum :transaction_type, { deposit: 0, withdraw: 1, transfer_out: 2, transfer_in: 3 }
 end

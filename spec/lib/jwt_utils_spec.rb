@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe JwtUtils, type: :module do
   let(:payload) { { user_id: 1 } }
   let(:token) { JwtUtils.encode(payload) }
-  
+
   describe '.encode' do
     it 'returns a string token' do
       expect(token).to be_a(String)

@@ -15,12 +15,12 @@ class Wallet::DepositService < Wallet::BaseService
 
       wallet.balance += amount
       wallet.save!
-      
+
       TransactionEvent.create!(
         wallet: wallet,
         amount: amount,
         balance: wallet.balance,
-        transaction_type: TransactionEvent.transaction_types['deposit']
+        transaction_type: TransactionEvent.transaction_types["deposit"]
       )
     end
   rescue ActiveRecord::RecordInvalid => e

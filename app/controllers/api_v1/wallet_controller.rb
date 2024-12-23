@@ -19,12 +19,12 @@ class ApiV1::WalletController < ApiV1::BaseController
     =end
   APIDOC
   def deposit
-    deposit_service = Wallet::DepositService.new(user: current_user, amount: params['amount'])
+    deposit_service = Wallet::DepositService.new(user: current_user, amount: params["amount"])
 
     if deposit_service.execute
-      return render_success({ balance: current_user.wallet.balance})
+      render_success({ balance: current_user.wallet.balance })
     else
-      return render_bad_request({ error: deposit_service.first_err_msg })
+      render_bad_request({ error: deposit_service.first_err_msg })
     end
   end
 
@@ -46,12 +46,12 @@ class ApiV1::WalletController < ApiV1::BaseController
     =end
   APIDOC
   def withdraw
-    withdraw_service = Wallet::WithdrawService.new(user: current_user, amount: params['amount'])
+    withdraw_service = Wallet::WithdrawService.new(user: current_user, amount: params["amount"])
 
     if withdraw_service.execute
-      return render_success({ balance: current_user.wallet.balance})
+      render_success({ balance: current_user.wallet.balance })
     else
-      return render_bad_request({ error: withdraw_service.first_err_msg })
+      render_bad_request({ error: withdraw_service.first_err_msg })
     end
   end
 
@@ -76,14 +76,14 @@ class ApiV1::WalletController < ApiV1::BaseController
   def transfer
     transfer_service = Wallet::TransferService.new(
       user: current_user,
-      dest_username: params['username'],
-      amount: params['amount']
+      dest_username: params["username"],
+      amount: params["amount"]
     )
 
     if transfer_service.execute
-      return render_success({ balance: current_user.wallet.balance})
+      render_success({ balance: current_user.wallet.balance })
     else
-      return render_bad_request({ error: transfer_service.first_err_msg })
+      render_bad_request({ error: transfer_service.first_err_msg })
     end
   end
 
@@ -99,9 +99,9 @@ class ApiV1::WalletController < ApiV1::BaseController
     =end
   APIDOC
   def get_balance
-    return render_success({ balance: current_user.wallet.balance})
+    render_success({ balance: current_user.wallet.balance })
   end
-  
+
   <<-APIDOC
     =begin
       @apiGroup Wallet
@@ -138,7 +138,7 @@ class ApiV1::WalletController < ApiV1::BaseController
       .order(created_at: :desc).page(page).per(per_page)
 
     render json: {
-      transactions: transactions_events.as_json(only: [:id, :amount, :balance, :transaction_type, :created_at]),
+      transactions: transactions_events.as_json(only: [ :id, :amount, :balance, :transaction_type, :created_at ]),
       meta: pagination_meta(transactions_events)
     }
   end

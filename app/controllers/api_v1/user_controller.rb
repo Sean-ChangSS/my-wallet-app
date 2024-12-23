@@ -20,16 +20,16 @@ class ApiV1::UserController < ApiV1::BaseController
     username = params[:username]
 
     if username.nil? || username.empty?
-      return render_bad_request({ error: 'username should not be empty' })
+      return render_bad_request({ error: "username should not be empty" })
     end
 
     if User.where(username: username).exists?
-      return render_bad_request({ error: 'username already registered' })
+      return render_bad_request({ error: "username already registered" })
     end
 
     user = User.create!(username: username)
 
-    render_success({ token: JwtUtils.encode({user_id: user.id}) })
+    render_success({ token: JwtUtils.encode({ user_id: user.id }) })
   end
 
   <<-APIDOC
@@ -52,8 +52,8 @@ class ApiV1::UserController < ApiV1::BaseController
   def login
     user = User.find_by(username: params[:username])
 
-    return render_bad_request({ error: 'incorrect username' }) if user.nil?
+    return render_bad_request({ error: "incorrect username" }) if user.nil?
 
-    render_success({ token: JwtUtils.encode({user_id: user.id}) })
+    render_success({ token: JwtUtils.encode({ user_id: user.id }) })
   end
 end

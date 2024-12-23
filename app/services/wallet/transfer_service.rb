@@ -14,7 +14,7 @@ class Wallet::TransferService < Wallet::BaseService
     end
 
     ActiveRecord::Base.transaction do
-      wallets = Wallet.where(user_id: [user.id, dest_user.id]).order(:id).lock
+      wallets = Wallet.where(user_id: [ user.id, dest_user.id ]).order(:id).lock
       src_wallet = wallets.find { |w| w.user_id == user.id }
       dest_wallet = wallets.find { |w| w.user_id == dest_user.id }
 
@@ -38,13 +38,13 @@ class Wallet::TransferService < Wallet::BaseService
         wallet: src_wallet,
         amount: amount,
         balance: src_wallet.balance,
-        transaction_type: TransactionEvent.transaction_types['transfer_out']
+        transaction_type: TransactionEvent.transaction_types["transfer_out"]
       )
       TransactionEvent.create!(
         wallet: dest_wallet,
         amount: amount,
         balance: dest_wallet.balance,
-        transaction_type: TransactionEvent.transaction_types['transfer_in']
+        transaction_type: TransactionEvent.transaction_types["transfer_in"]
       )
     end
   rescue ActiveRecord::RecordInvalid => e

@@ -10,6 +10,6 @@ class CreateTransactionEvents < ActiveRecord::Migration[8.0]
       t.datetime :created_at, null: false
     end
 
-    add_index :transaction_events, [:wallet_id, :created_at]
+    add_index :transaction_events, [ :wallet_id, :created_at ]
   end
 end

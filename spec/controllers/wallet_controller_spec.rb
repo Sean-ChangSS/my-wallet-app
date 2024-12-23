@@ -316,7 +316,7 @@ RSpec.describe 'ApiV1::WalletController', type: :request do
       context 'with insufficient source balance' do
         let(:initial_balance_a) { 0 }
         let(:initial_balance_b) { 0 }
-  
+
         it 'rejects transfer with HTTP 400' do
           perform_transfer
 
@@ -456,7 +456,7 @@ RSpec.describe 'ApiV1::WalletController', type: :request do
 
         expect(response).to have_http_status(:ok)
       end
-      
+
       it "returns the correct page of transactions" do
         perform_get_transactions
 

@@ -1,12 +1,12 @@
 # lib/jwt_utils.rb
 
-require 'jwt'
+require "jwt"
 
 module JwtUtils
   # Secret key should retrieve from environment variables in production environment,
   # at here we explicitly defined it for simplicity
   SECRET_KEY = "devSecret"
-  ALGORITHM = 'HS256'
+  ALGORITHM = "HS256"
 
   def self.encode(payload, exp = 24.hours.from_now)
     payload[:exp] = exp.to_i
@@ -17,8 +17,8 @@ module JwtUtils
     decoded = JWT.decode(token, SECRET_KEY, true, { algorithm: ALGORITHM })
     decoded[0]
   rescue JWT::ExpiredSignature
-    raise 'Token has expired'
+    raise "Token has expired"
   rescue JWT::DecodeError
-    raise 'Invalid token'
+    raise "Invalid token"
   end
 end

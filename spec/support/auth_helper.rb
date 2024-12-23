@@ -6,7 +6,7 @@ module AuthHelper
   def auth_header(user_id)
     {
       "Authorization" => token_generator(user_id),
-      "Content-Type" => "application/json",
+      "Content-Type" => "application/json"
     }
   end
 end

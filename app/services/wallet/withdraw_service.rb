@@ -20,7 +20,7 @@ class Wallet::WithdrawService < Wallet::BaseService
         wallet: wallet,
         amount: amount,
         balance: wallet.balance,
-        transaction_type: TransactionEvent.transaction_types['withdraw']
+        transaction_type: TransactionEvent.transaction_types["withdraw"]
       )
     end
   rescue ActiveRecord::RecordInvalid => e

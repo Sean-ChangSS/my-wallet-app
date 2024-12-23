@@ -6,16 +6,16 @@ RSpec.describe ApplicationController, type: :controller do
   describe '.authenticate_request' do
     controller do
       before_action :authenticate_request
-  
+
       def index
         render json: { user: current_user }
       end
     end
-  
+
     let(:user) { create(:user) }
     let(:valid_token) { JwtUtils.encode(user_id: user.id) }
     let(:invalid_token) { 'invalid.token.here' }
-    
+
     context 'with valid token' do
       before do
         request.headers['Authorization'] = "Bearer #{valid_token}"
@@ -78,7 +78,7 @@ RSpec.describe ApplicationController, type: :controller do
     end
   end
 
-  describe '.json_error_response' do 
+  describe '.json_error_response' do
     controller do
       def index
         raise StandardError

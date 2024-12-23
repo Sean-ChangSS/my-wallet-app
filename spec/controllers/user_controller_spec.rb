@@ -14,7 +14,7 @@ RSpec.describe "ApiV1::UserController", type: :request do
         }.to change(User, :count).by(1)
 
         expect(response).to have_http_status(:ok)
-        
+
         json_response = JSON.parse(response.body)
         expect(json_response).to have_key("token")
         expect(json_response["token"]).to be_a(String)
@@ -26,7 +26,7 @@ RSpec.describe "ApiV1::UserController", type: :request do
         post "/v1/user/sign_up", params: {}.to_json, headers: headers
 
         expect(response).to have_http_status(:bad_request)
-        
+
         json_response = JSON.parse(response.body)
         expect(json_response).to eq({ "error" => "username should not be empty" })
       end
@@ -37,7 +37,7 @@ RSpec.describe "ApiV1::UserController", type: :request do
         post "/v1/user/sign_up", params: { username: "" }.to_json, headers: headers
 
         expect(response).to have_http_status(:bad_request)
-        
+
         json_response = JSON.parse(response.body)
         expect(json_response).to eq({ "error" => "username should not be empty" })
       end
@@ -52,7 +52,7 @@ RSpec.describe "ApiV1::UserController", type: :request do
         post "/v1/user/sign_up", params: { username: valid_username }.to_json, headers: headers
 
         expect(response).to have_http_status(:bad_request)
-        
+
         json_response = JSON.parse(response.body)
         expect(json_response).to eq({ "error" => "username already registered" })
       end
@@ -68,7 +68,7 @@ RSpec.describe "ApiV1::UserController", type: :request do
         post "/v1/user/login", params: { username: user.username }.to_json, headers: headers
 
         expect(response).to have_http_status(:ok)
-        
+
         json_response = JSON.parse(response.body)
         expect(json_response).to have_key("token")
         expect(json_response["token"]).to be_a(String)
@@ -82,7 +82,7 @@ RSpec.describe "ApiV1::UserController", type: :request do
         post "/v1/user/login", params: { username: invalid_username }.to_json, headers: headers
 
         expect(response).to have_http_status(:bad_request)
-        
+
         json_response = JSON.parse(response.body)
         expect(json_response).to eq({ "error" => "incorrect username" })
       end
