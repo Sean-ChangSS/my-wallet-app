@@ -5,7 +5,7 @@ class ApiV1::WalletController < ApiV1::BaseController
     =begin
       @apiGroup Wallet
       @api {post}/v1/wallet/deposit wallet/deposit
-      @apiParam {Integer} amount amount
+      @apiBody {Integer} amount amount
       @apiSuccessExample {json} success
         HTTP/1.1 200
         {
@@ -32,7 +32,7 @@ class ApiV1::WalletController < ApiV1::BaseController
     =begin
       @apiGroup Wallet
       @api {post}/v1/wallet/withdraw wallet/withdraw
-      @apiParam {Integer} amount amount
+      @apiBody {Integer} amount amount
       @apiSuccessExample {json} success
         HTTP/1.1 200
         {
@@ -59,8 +59,8 @@ class ApiV1::WalletController < ApiV1::BaseController
     =begin
       @apiGroup Wallet
       @api {post}/v1/wallet/transfer wallet/transfer
-      @apiParam {String} username username
-      @apiParam {Integer} amount amount
+      @apiBody {String} username username
+      @apiBody {Integer} amount amount
       @apiSuccessExample {json} success
         HTTP/1.1 200
         {
@@ -106,6 +106,8 @@ class ApiV1::WalletController < ApiV1::BaseController
     =begin
       @apiGroup Wallet
       @api {get}/v1/wallet/transactions wallet/transactions
+      @apiParam {Integer} page page
+      @apiParam {Integer} per_page per_page
       @apiSuccessExample {json} success
         HTTP/1.1 200
         {
