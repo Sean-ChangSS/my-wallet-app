@@ -1,3 +1,12 @@
+build:
+	docker-compose build
+
+db_create:
+	docker-compose run web bin/rails db:create
+
+db_migrate:
+	docker-compose run web bin/rails db:migrate
+
 up:
 	docker-compose up web --force-recreate
 
