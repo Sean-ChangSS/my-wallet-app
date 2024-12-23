@@ -92,14 +92,17 @@ See DevLog0commonConcern.md
 See DevLog-feature.md
 
 
+2024/12/23 09:00 ~ 2024/12/23 10:20
+2024/12/23 18:30 ~ 2024/12/23 20:16
+2024/12/23 20:50 ~ 2024/12/23 21:46
 # 8 Review and write summary for this work.
 
 ## Todo
 1. Write readme.md
-  0. Fix dead lock issue
-  1. Launching environment
-  2. Feature navigation
-  3. Project navigation
-  4. Decision explanation
-  5. Working time summary
-  6. List todos
+  0. [V] Fix dead lock issue (60min)
+  1. [V] Launching environment
+  2. [V] Feature navigation
+  3. [V] Project navigation
+  4. [V] Decision explanation
+  5. [V] Working time summary
+  6. [V] List todos
