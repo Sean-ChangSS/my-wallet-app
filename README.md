@@ -34,10 +34,9 @@ from a registered user.
 All the Wallet API should request with the following headers:
 1. `Content-Type: application/json`
 2. `Authorization: Bearer {your_user_token}`
-The following curl command example will ignore headers for simplicity.
 
 The following example shows how to interact with API providing all the feature
-required by the coding test.
+required by the coding test. (The header mentioned above will be ignored for simplicity.)
 1. Deposit money to user's wallet:
 ```curl -X POST http://localhost:3000/v1/wallet/deposit -d '{"amount": 10}'```
 2. Withdraw money from user's wallet:
@@ -94,10 +93,9 @@ I didn't have a clear picture about how the architecture of my project will be, 
 When implementing wallet feature, I found out that if I put both validation and business logic in controller it will be too hard to read. So service class is added to support validation with simple command, and only writes core logic in the main function.
 
 #### Follow up Thoughts
-There are inconsistent use of service class in this project
+There are inconsistent use of service class in this project, and will be the todos for this project:
 1. User feature should be implemented with service class, but it is now implemented in controller.
 2. Wallet feature for reading data should be implemented with finder class (similar to service but will be only used for reading database), but it is now implemented in controller.
-These implementation should be todos for this project.
 
 ### Using Pessimistic Lock Instead of Optimistic Lock
 
@@ -110,7 +108,7 @@ Optimistic lock has less overhead and does not risk dead locking. If the frequen
 ### Store Transfer Transaction History for Both User
 
 #### Initial Thoughts
-When designing transaction history table, I thought about saving 1 transaction event for 1 transfer operation at first. But I soon found out it would require filtering both source wallet and destination wallet to get complete transaction history, which is quite inefficient. Now transfering opeartion will create 2 transaction history based on the wallet_id from both sides. Querying all transaction history about a wallet only requires filtering wallet_id now.
+Storing 1 transaction event for 1 transfer operation will require filtering 2 fields (source wallet & target wallet) to find all the transactions for 1 wallet. But storing changes on both sides with 2 record will only have to inspect only 1 field, which is more efficient.
 
 
 ## Project Working Time
@@ -148,3 +146,6 @@ When designing transaction history table, I thought about saving 1 transaction e
 
 ### Settings
 - Optimize environment settings under config/*
+
+### CI/CD
+- Add test to CI
