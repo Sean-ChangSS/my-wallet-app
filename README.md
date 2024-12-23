@@ -148,3 +148,6 @@ When designing transaction history table, I thought about saving 1 transaction e
 
 ### Settings
 - Optimize environment settings under config/*
+
+### CI/CD
+- Add test to CI
