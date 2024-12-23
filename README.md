@@ -1,11 +1,12 @@
-# Wellcome to my-wallet-app (a crypto.com's test)
+# Wellcome to my-wallet-app (a Crypto.com's Test)
 
-[Environment Setup](#Environment Setup)
-[Feature Navigation](#Feature Navigation)
-[Project Navigation (How to view the code)](#Project Navigation)
-[Important Design Decisions](#Important Design Decisions)
-[Project Working Time](#Project Working Time)
-[Areas to Improve](#Areas to Improve)
+Table of contents
+1. [Environment Setup](#environment-setup)
+2. [Feature Navigation](#feature-navigation)
+3. [Project Navigation (How to view the code)](#project-navigation)
+4. [Important Design Decisions](#important-design-decisions)
+5. [Project Working Time](#project-working-time)
+6. [Areas to Improve](#areas-to-improve)
 
 ## Environment Setup
 
