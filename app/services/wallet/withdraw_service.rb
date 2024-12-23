@@ -1,8 +1,8 @@
-class Wallet::WithdrawService < BaseService
+class Wallet::WithdrawService < Wallet::BaseService
   attr_accessor :user, :amount
 
   validates :user, type: { type: User }, presence: true
-  validates :amount, type: { type: Integer }, presence: true, comparison: { greater_than: 0, less_than: 1_000_000_000 }
+  validates :amount, type: { type: Integer }, presence: true, comparison: { greater_than: MIN_TRANSFER_AMOUNT, less_than: MAX_TRANSFER_AMOUNT }
 
   def perform
     ActiveRecord::Base.transaction do

@@ -1,11 +1,9 @@
-class Wallet::TransferService < BaseService
-  MAX_BALANCE = 999_999_999
-
+class Wallet::TransferService < Wallet::BaseService
   attr_accessor :user, :dest_username, :amount
 
   validates :user, type: { type: User }, presence: true
   validates :dest_username, type: { type: String }, presence: true
-  validates :amount, type: { type: Integer }, presence: true, comparison: { greater_than: 0, less_than: 1_000_000_000 }
+  validates :amount, type: { type: Integer }, presence: true, comparison: { greater_than: MIN_TRANSFER_AMOUNT, less_than_or_equal_to: MAX_TRANSFER_AMOUNT }
 
   def perform
     dest_user = User.find_by(username: dest_username)

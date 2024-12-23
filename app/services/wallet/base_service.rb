@@ -1,0 +1,5 @@
+class Wallet::BaseService < BaseService
+  MIN_TRANSFER_AMOUNT = 0
+  MAX_TRANSFER_AMOUNT = 1_000_000_000
+  MAX_BALANCE = 999_999_999
+end
